@@ -1,11 +1,19 @@
+import { formatDistanceToNow, isAfter, parseISO } from 'date-fns';
+import { subYears } from 'date-fns';
 
 export const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  const date = parseISO(dateString);
+  const oneYearAgo = subYears(new Date(), 1);
+
+  if (isAfter(date, oneYearAgo)) {
+    return formatDistanceToNow(date, { addSuffix: true });
+  } else {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  }
 };
 
 export const truncateText = (text, maxLength = 100) => {
@@ -17,7 +25,6 @@ export const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
-
 
 export const getToken = () => {
   return localStorage.getItem('token');
