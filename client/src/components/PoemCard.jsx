@@ -1,12 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { formatDate, truncateText } from "../../utils/helpers";
-import useUserStore from "../../store/userStore";
-import { toggleLikePoem } from "../../api/api";
+import { formatDate, truncateText } from "../utils/helpers";
+import useUserStore from "../store/userStore";
+import { toggleLikePoem } from "../api/api";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Avatar from "../Avatar";
-import HeartIcon from "../icons/HeartIcon";
-import CommentIcon from "../icons/CommentIcon";
+import Avatar from "./Avatar";
+import HeartIcon from "./icons/HeartIcon";
 import { MessageCircle } from "lucide-react";
 
 const PoemCard = ({ poem }) => {
@@ -29,9 +28,9 @@ const PoemCard = ({ poem }) => {
     }
   };
 
-  const handleComment = () => {
-    navigate(`/poem/${poem._id}`);
-  };
+  // const handleComment = () => {
+  //   navigate(`/poem/${poem._id}`);
+  // };
 
   return (
     <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
@@ -61,8 +60,8 @@ const PoemCard = ({ poem }) => {
             <span className="text-gray-400 text-sm">{likes}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <CommentIcon onClick={handleComment} />
-            <span className="text-gray-400 text-sm">{poem.comments.length}</span>
+            {/* <CommentIcon onClick={handleComment} />
+            <span className="text-gray-400 text-sm">{poem.comments.length}</span> */}
           </div>
         </div>
 
