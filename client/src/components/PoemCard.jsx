@@ -4,9 +4,9 @@ import useUserStore from "../store/userStore";
 import { toggleLikePoem } from "../api/api";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Avatar from "../Avatar";
-import HeartIcon from "../icons/HeartIcon";
-import CommentIcon from "../icons/CommentIcon";
+import Avatar from "./Avatar";
+import HeartIcon from "./icons/HeartIcon";
+import CommentIcon from "./icons/CommentIcon";
 import { MessageCircle } from "lucide-react";
 
 const PoemCard = ({ poem }) => {
