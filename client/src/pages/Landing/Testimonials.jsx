@@ -1,32 +1,17 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Avatar from "../../components/Avatar";
+import Avatar from '../../components/Avatar';
+
+const testimonials = [
+  { name: 'Luna Star', avatar: '/assets/avatars/default.png', quote: 'VerseSpace has given my poetry a home where it truly shines.' },
+  { name: 'Cosmo Poet', avatar: '/assets/avatars/default.png', quote: 'A beautiful platform to connect with other poets and find inspiration.' },
+  { name: 'Stellar Muse', avatar: '/assets/avatars/default.png', quote: 'Writing here feels like crafting stars in a cosmic indigo.' },
+  { name: 'Nova Verse', avatar: '/assets/avatars/default.png', quote: 'The community here is so supportive and vibrant!' },
+  { name: 'Astral Dreamer', avatar: '/assets/avatars/default.png', quote: 'Every poem I read sparks a new idea for my own work.' },
+  { name: 'Celestial Bard', avatar: '/assets/avatars/default.png', quote: 'VerseSpace is my creative sanctuary for sharing poetry.' },
+];
+
 
 const Testimonials = () => {
-  const [testimonials, setTestimonials] = useState([]);
-
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const response = await axios.get("/api/poems/random");
-        const formattedTestimonials = response.data.map((poem) => ({
-          name: poem.author.name,
-          avatar: poem.author.profilePic || "/assets/avatars/default.png",
-          quote: poem.content.substring(0, 100) + "...",
-        }));
-        setTestimonials(formattedTestimonials);
-      } catch (error) {
-        console.error("Error fetching testimonials:", error);
-      }
-    };
-    fetchTestimonials();
-  }, []);
-
   const slides = [...testimonials, ...testimonials];
-
-  if (testimonials.length === 0) {
-    return null;
-  }
 
   return (
     <section className="py-16 bg-gray-900 overflow-hidden relative">
@@ -42,15 +27,8 @@ const Testimonials = () => {
                 key={i}
                 className="slide shrink-0 w-80 bg-gray-800 rounded-lg p-6 shadow-lg text-center transform transition-transform hover:scale-105 hover:shadow-xl"
               >
-                <Avatar
-                  src={t.avatar}
-                  alt={t.name}
-                  size="lg"
-                  className="mx-auto mb-4"
-                />
-                <p className="text-gray-300 italic mb-4 line-clamp-3">
-                  {t.quote}
-                </p>
+                <Avatar src={t.avatar} alt={t.name} size="lg" className="mx-auto mb-4" />
+                <p className="text-gray-300 italic mb-4 line-clamp-3">{t.quote}</p>
                 <p className="text-indigo-400 font-semibold">{t.name}</p>
               </div>
             ))}
