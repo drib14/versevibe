@@ -3,17 +3,17 @@ const About = () => {
     <section id="about" className="relative py-20 bg-gray-900 overflow-hidden">
       <div className="container mx-auto max-w-4xl px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-serif text-white mb-8">
-          About VerseSpace
+          About VerseVibe
         </h1>
         <p className="text-gray-300 font-serif leading-relaxed text-lg mb-6">
-          VerseSpace is a cosmic haven for poets and dreamers, where words weave
+          VerseVibe is a cosmic haven for poets and dreamers, where words weave
           stories, emotions, and dreams into a universe of shaindigo creativity.
         </p>
         <p className="text-gray-300 font-serif leading-relaxed text-lg mb-6">
           Our mission is to provide a platform where every voice can shine,
           connecting poets from all corners of the globe to inspire and be
           inspired. Whether you're crafting your first poem or sharing your
-          hundredth, VerseSpace is your home for self-expression.
+          hundredth, VerseVibe is your home for self-expression.
         </p>
         <p className="text-gray-300 font-serif leading-relaxed text-lg">
           Join us to explore a galaxy of poetry, connect with a vibrant

@@ -6,6 +6,7 @@ import {
   updatePoem,
   deletePoem,
   toggleLikePoem,
+  getRandomPoems,
 } from "../controllers/poemController.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
@@ -14,6 +15,8 @@ const router = express.Router();
 router.post("/create", authMiddleware, createPoem);
 
 router.get("/", getAllPoems);
+
+router.get("/random", getRandomPoems);
 
 router.get("/:id", authMiddleware, getPoemById);
 

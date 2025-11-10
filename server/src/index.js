@@ -10,7 +10,7 @@ dotenv.config()
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: 'https://versespace.vercel.app' }));
+app.use(cors({ origin: process.env.CLIENT_URL }));
 
 connectDB();
 
@@ -19,12 +19,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/poems", poemRoutes);
 
 app.get("/", (req, res) => {
-  res.send("VerseSpace backend is live");
+  res.send("VerseVibe backend is live");
 });
 
 
 app.get("/api/test", (req, res) => {
-  res.json({ message: "VerseSpace backend is running successfully" });
+  res.json({ message: "VerseVibe backend is running successfully" });
 });
 
 const PORT = process.env.PORT || 5000;

@@ -48,7 +48,7 @@ const Login = () => {
       <div className="md:w-1/2 bg-linear-to-br from-indigo-900 to-gray-800 flex items-center justify-center p-8">
         <div className="text-center text-white">
           <h2 className="text-3xl md:text-4xl font-serif mb-4">Your words deserve a home.</h2>
-          <p className="text-gray-300">Join VerseSpace to share your poetry with the universe.</p>
+          <p className="text-gray-300">Join VerseVibe to share your poetry with the universe.</p>
         </div>
       </div>
 

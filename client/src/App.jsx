@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import useUserStore from './store/userStore';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import LandingPage from './pages/Landing/LandingPage';
 import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
@@ -84,7 +83,6 @@ function App() {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
-        <Footer />
         <Toaster position="top-right" toastOptions={{ style: { background: '#1f2937', color: '#fff' } }} />
       </div>
     </Router>

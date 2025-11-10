@@ -134,3 +134,34 @@ export const toggleLikePoem = async (req, res) => {
     res.status(500).json({ message: "Error toggling like", error: error.message });
   }
 };
+
+export const getRandomPoems = async (req, res) => {
+  try {
+    const poems = await Poem.aggregate([
+      { $sample: { size: 6 } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "author",
+        },
+      },
+      { $unwind: "$author" },
+      {
+        $project: {
+          _id: 1,
+          content: 1,
+          "author.name": 1,
+          "author.profilePic": 1,
+        },
+      },
+    ]);
+    res.status(200).json(poems);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching random poems",
+      error: error.message,
+    });
+  }
+};

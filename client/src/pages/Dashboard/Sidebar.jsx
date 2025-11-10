@@ -30,7 +30,7 @@ const Sidebar = () => {
     <div className={`bg-gray-800 h-screen transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}>
       <div className="p-4 flex items-center justify-between">
         <h2 className={`font-bold text-white ${isCollapsed ? 'hidden' : ''}`}>
-          VerseSpace
+          VerseVibe
         </h2>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}

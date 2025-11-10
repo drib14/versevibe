@@ -34,7 +34,7 @@ const Navbar = () => {
           to={isAuthenticated ? '/dashboard' : '/'}
           className="text-2xl font-bold text-indigo-400"
         >
-          VerseSpace
+          VerseVibe
         </Link>
 
         <div className="hidden md:flex items-center space-x-6">
