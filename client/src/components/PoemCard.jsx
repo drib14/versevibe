@@ -63,7 +63,7 @@ const PoemCard = ({ poem }) => {
           </div>
           <div className="flex items-center space-x-1">
             <CommentIcon onClick={handleComment} />
-            <span className="text-gray-400 text-sm">{poem.comments.length}</span>
+            <span className="text-gray-400 text-sm">{poem.comments?.length || 0}</span>
           </div>
         </div>
 
