@@ -20,7 +20,7 @@ API.interceptors.request.use((config) => {
 
 export const signup = async (userData) => {
   try {
-    const response = await API.post('/auth/signup', userData);
+    const response = await API.post('/api/auth/signup', userData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error signing up' };
@@ -29,7 +29,7 @@ export const signup = async (userData) => {
 
 export const signin = async (userData) => {
   try {
-    const response = await API.post('/auth/signin', userData);
+    const response = await API.post('/api/auth/signin', userData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error signing in' };
@@ -39,7 +39,7 @@ export const signin = async (userData) => {
 
 export const getUserProfile = async (userId) => {
   try {
-    const response = await API.get(`/users/${userId}`);
+    const response = await API.get(`/api/users/${userId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error fetching user profile' };
@@ -48,7 +48,7 @@ export const getUserProfile = async (userId) => {
 
 export const updateUser = async (userId, userData) => {
   try {
-    const response = await API.put(`/users/${userId}`, userData);
+    const response = await API.put(`/api/users/${userId}`, userData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error updating user' };
@@ -59,7 +59,7 @@ export const updateUserAvatar = async (userId, avatarFile) => {
   try {
     const formData = new FormData();
     formData.append('avatar', avatarFile);
-    const response = await API.put(`/users/${userId}/avatar`, formData, {
+    const response = await API.put(`/api/users/${userId}/avatar`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
@@ -70,7 +70,7 @@ export const updateUserAvatar = async (userId, avatarFile) => {
 
 export const getUserPoems = async (userId) => {
   try {
-    const response = await API.get(`/users/${userId}/poems`);
+    const response = await API.get(`/api/users/${userId}/poems`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error fetching user poems' };
@@ -79,7 +79,7 @@ export const getUserPoems = async (userId) => {
 
 export const getUserLikedPoems = async (userId) => {
   try {
-    const response = await API.get(`/users/${userId}/liked`);
+    const response = await API.get(`/api/users/${userId}/liked`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error fetching liked poems' };
@@ -88,7 +88,7 @@ export const getUserLikedPoems = async (userId) => {
 
 export const createPoem = async (poemData) => {
   try {
-    const response = await API.post('/poems/create', poemData);
+    const response = await API.post('/api/poems/create', poemData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error creating poem' };
@@ -97,7 +97,7 @@ export const createPoem = async (poemData) => {
 
 export const getAllPoems = async () => {
   try {
-    const response = await API.get('/poems');
+    const response = await API.get('/api/poems');
     return response.data; 
   } catch (error) {
     throw error.response?.data || { message: 'Error fetching poems' };
@@ -106,7 +106,7 @@ export const getAllPoems = async () => {
 
 export const getPoemById = async (poemId) => {
   try {
-    const response = await API.get(`/poems/${poemId}`);
+    const response = await API.get(`/api/poems/${poemId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error fetching poem' };
@@ -115,7 +115,7 @@ export const getPoemById = async (poemId) => {
 
 export const updatePoem = async (poemId, poemData) => {
   try {
-    const response = await API.put(`/poems/${poemId}`, poemData);
+    const response = await API.put(`/api/poems/${poemId}`, poemData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error updating poem' };
@@ -124,7 +124,7 @@ export const updatePoem = async (poemId, poemData) => {
 
 export const deletePoem = async (poemId) => {
   try {
-    const response = await API.delete(`/poems/${poemId}`);
+    const response = await API.delete(`/api/poems/${poemId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error deleting poem' };
@@ -133,7 +133,7 @@ export const deletePoem = async (poemId) => {
 
 export const toggleLikePoem = async (poemId) => {
   try {
-    const response = await API.put(`/poems/${poemId}/like`);
+    const response = await API.put(`/api/poems/${poemId}/like`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error toggling like' };

@@ -67,7 +67,7 @@ const Signup = () => {
               onChange={handleChange}
               placeholder="Enter your name"
               error={errors.name}
-              autocomplete="name"
+              autoComplete="name"
             />
             <InputField
               label="Email"
@@ -77,7 +77,7 @@ const Signup = () => {
               onChange={handleChange}
               placeholder="Enter your email"
               error={errors.email}
-              autocomplete="email"
+              autoComplete="email"
             />
             <InputField
               label="Password"
@@ -87,7 +87,7 @@ const Signup = () => {
               onChange={handleChange}
               placeholder="Enter your password"
               error={errors.password}
-              autocomplete="new-password"
+              autoComplete="new-password"
             />
             <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full">
               Sign Up
