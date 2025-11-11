@@ -14,7 +14,7 @@ const renderContent = (content, mentions) => {
 
   return parts.map((part, index) => {
     if (index % 2 === 1) {
-      const mention = mentions.find((m) => m.name === part);
+      const mention = mentions.find((m) => m.username === part);
       if (mention) {
         return (
           <Link key={index} to={`/profile/${mention._id}`} className="text-indigo-400 hover:underline">

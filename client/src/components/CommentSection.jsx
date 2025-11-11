@@ -69,7 +69,7 @@ const CommentSection = ({ poemId, totalCommentsCount, onCommentIconClick, onComm
           onClick={() => setShowAllComments(true)}
           className="text-gray-400 hover:text-white mt-4"
         >
-          View all {comments.length} comments
+          View all {totalCommentsCount} comments
         </button>
       )}
     </div>

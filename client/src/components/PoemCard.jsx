@@ -20,7 +20,6 @@ const PoemCard = ({ poem: initialPoem }) => {
   );
   const [isLikersModalOpen, setIsLikersModalOpen] = useState(false);
   const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
-  const [triggerFocus, setTriggerFocus] = useState(false);
   const navigate = useNavigate();
 
   const isOwnPoem = isAuthenticated && user && poem.author._id === user.id;
@@ -44,7 +43,6 @@ const PoemCard = ({ poem: initialPoem }) => {
 
   const handleCommentIconClick = () => {
     setIsCommentSectionOpen(!isCommentSectionOpen);
-    setTriggerFocus(true);
   };
 
   const renderLikers = () => {
@@ -142,7 +140,7 @@ const PoemCard = ({ poem: initialPoem }) => {
               poemId={poem._id}
               totalCommentsCount={poem.totalCommentsCount}
               onCommentAdded={handleCommentAdded}
-              onCommentIconClick={triggerFocus}
+              onCommentIconClick={isCommentSectionOpen}
             />
           </div>
         )}
