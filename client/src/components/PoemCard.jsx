@@ -124,7 +124,11 @@ const PoemCard = ({ poem }) => {
         </div>
         {isCommentSectionOpen && (
           <div className="p-4">
-            <CommentSection poemId={poem._id} />
+            <CommentSection
+              poemId={poem._id}
+              totalCommentsCount={poem.totalCommentsCount}
+              onCommentIconClick={isCommentSectionOpen}
+            />
           </div>
         )}
       </div>

@@ -9,6 +9,9 @@ export const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
+    if (typeof email !== 'string') {
+      return res.status(400).json({ message: 'Email must be a string' });
+    }
     const existingUser = await User.findOne({ email: email.toLowerCase() });
 
     if (existingUser) {
@@ -45,6 +48,9 @@ export const signup = async (req, res) => {
 export const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (typeof email !== 'string') {
+      return res.status(400).json({ message: 'Email must be a string' });
+    }
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });

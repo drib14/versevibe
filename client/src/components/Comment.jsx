@@ -3,6 +3,10 @@ import { formatDate } from '../utils/helpers';
 import Avatar from './Avatar';
 import CommentForm from './CommentForm';
 import { Link } from 'react-router-dom';
+import { toggleLikeComment } from '../api/api';
+import useUserStore from '../store/userStore';
+import HeartIcon from './icons/HeartIcon';
+import toast from 'react-hot-toast';
 
 const renderContent = (content) => {
   const mentionRegex = /@(\w+)/g;
@@ -23,6 +27,21 @@ const renderContent = (content) => {
 
 const Comment = ({ comment, onReply }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const { user } = useUserStore();
+  const [likes, setLikes] = useState(comment.likes);
+  const [isLiked, setIsLiked] = useState(
+    user ? comment.likes.some((like) => like._id === user.id) : false
+  );
+
+  const handleLike = async () => {
+    try {
+      const response = await toggleLikeComment(comment._id);
+      setLikes(response.likes);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      toast.error('Failed to like comment');
+    }
+  };
 
   return (
     <div className="flex items-start space-x-3">
@@ -42,6 +61,10 @@ const Comment = ({ comment, onReply }) => {
           >
             Reply
           </button>
+          <div className="flex items-center space-x-1">
+            <HeartIcon isLiked={isLiked} onClick={handleLike} disabled={!user} size="xs" />
+            <span className="text-gray-400 text-xs">{likes.length}</span>
+          </div>
         </div>
         {showReplyForm && (
           <div className="mt-2">
