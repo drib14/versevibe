@@ -56,6 +56,7 @@ export const getAllPoems = async (req, res) => {
     const query = tag ? { tags: tag } : {};
     const poems = await Poem.find(query)
       .populate("author", "name profilePic lastActive")
+      .populate("likes", "name")
       .sort({ createdAt: -1 });
     res.status(200).json(poems);
   } catch (error) {
@@ -69,7 +70,9 @@ export const getAllPoems = async (req, res) => {
 export const getPoemById = async (req, res) => {
   const { id } = req.params;
   try {
-    const poem = await Poem.findById(id).populate("author", "name profilePic lastActive");
+    const poem = await Poem.findById(id)
+      .populate("author", "name profilePic lastActive")
+      .populate("likes", "name");
     if (!poem) {
       return res.status(404).json({ message: "Poem not found" });
     }

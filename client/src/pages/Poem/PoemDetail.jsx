@@ -8,6 +8,7 @@ import { getPoemById, toggleLikePoem, getAllPoems } from '../../api/api';
 import { formatDate, formatTags } from '../../utils/helpers';
 import useUserStore from '../../store/userStore';
 import toast from 'react-hot-toast';
+import CommentSection from '../../components/CommentSection';
 
 const PoemDetail = () => {
   const { id } = useParams();
@@ -24,7 +25,7 @@ const PoemDetail = () => {
         const poemData = await getPoemById(id);
         setPoem(poemData);
         setLikes(poemData.likes.length);
-        setIsLiked(user ? poemData.likes.includes(user.id) : false);
+        setIsLiked(user ? poemData.likes.some(like => like._id === user.id) : false);
 
        
         const allPoems = await getAllPoems();
@@ -79,13 +80,9 @@ const PoemDetail = () => {
               <Heart className={`w-5 h-5 mr-1 ${isLiked ? 'fill-current' : ''}`} />
               <span>{likes}</span>
             </button>
-            {/* <button className="flex items-center text-gray-400 hover:text-indigo-400">
-              <MessageCircle className="w-5 h-5 mr-1" />
-              <span>0</span> 
-            </button> */  } 
-             {/* Comments feature will add later.  */}
           </div>
         </div>
+        <CommentSection poemId={id} />
         {suggestedPoems.length > 0 && (
           <div className="mt-12">
             <h2 className="text-2xl font-serif text-white mb-6">More Like This</h2>

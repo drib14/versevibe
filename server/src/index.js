@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import poemRoutes from "./routes/poemRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
 import { updateLastActive } from "./middlewares/updateLastActive.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
 
@@ -19,6 +20,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/users", authMiddleware, updateLastActive, userRoutes);
 app.use("/api/poems", authMiddleware, updateLastActive, poemRoutes);
+app.use("/api/comments", authMiddleware, updateLastActive, commentRoutes);
 
 app.get("/", (req, res) => {
   res.send("VerseVibe backend is live");

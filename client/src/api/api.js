@@ -149,4 +149,31 @@ export const toggleLikePoem = async (poemId) => {
   }
 };
 
+export const createComment = async (commentData) => {
+  try {
+    const response = await API.post('/api/comments', commentData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Error creating comment' };
+  }
+};
+
+export const getCommentsForPoem = async (poemId) => {
+  try {
+    const response = await API.get(`/api/comments/${poemId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Error fetching comments' };
+  }
+};
+
+export const toggleLikeComment = async (commentId) => {
+  try {
+    const response = await API.put(`/api/comments/${commentId}/like`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Error toggling like on comment' };
+  }
+};
+
 export default API;
