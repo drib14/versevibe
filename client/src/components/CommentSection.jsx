@@ -26,9 +26,10 @@ const CommentSection = ({ poemId }) => {
     return comments
       .filter((comment) => comment.parentComment === parentId)
       .map((comment) => (
-        <div key={comment._id} className="ml-4">
+        <div key={comment._id} className="relative pl-8">
+          <div className="absolute top-0 left-4 w-px bg-gray-600 h-full"></div>
           <Comment comment={comment} onReply={handleNewComment} />
-          {renderComments(comment._id)}
+          <div className="mt-4">{renderComments(comment._id)}</div>
         </div>
       ));
   };

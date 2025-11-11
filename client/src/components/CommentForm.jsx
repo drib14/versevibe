@@ -28,15 +28,15 @@ const CommentForm = ({ poemId, parentCommentId, onSubmit, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex items-start space-x-3">
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Write a comment..."
-        className="w-full bg-gray-700 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        rows="3"
+        className="w-full bg-gray-700 text-white rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        rows="1"
       ></textarea>
-      <div className="flex justify-end space-x-2 mt-2">
+      <div className="flex space-x-2">
         {onCancel && (
           <Button onClick={onCancel} variant="secondary" size="sm">
             Cancel
