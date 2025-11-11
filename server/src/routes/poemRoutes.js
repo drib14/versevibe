@@ -7,12 +7,15 @@ import {
   deletePoem,
   toggleLikePoem,
   getRandomPoems,
+  getTrendingTags,
 } from "../controllers/poemController.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/create", authMiddleware, createPoem);
+
+router.get("/trending-tags", getTrendingTags);
 
 router.get("/", getAllPoems);
 

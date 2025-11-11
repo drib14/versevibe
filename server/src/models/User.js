@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     profilePic: { type: String, default: "" },
     bio: { type: String, default: "" },
+    lastActive: { type: Date, default: Date.now },
     poems: [
       {
         type: mongoose.Schema.Types.ObjectId,

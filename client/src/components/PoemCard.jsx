@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { formatDate, truncateText, formatTags } from "../utils/helpers";
+import { formatDate, truncateText, formatTags, formatLastActive } from "../utils/helpers";
 import useUserStore from "../store/userStore";
 import { toggleLikePoem } from "../api/api";
 import { useState } from "react";
@@ -40,9 +40,15 @@ const PoemCard = ({ poem }) => {
           <Avatar src={poem.author.profilePic} alt={poem.author.name} />
           <div>
             <p className="text-white font-semibold">{poem.author.name}</p>
-            <p className="text-gray-400 text-xs">
-              {formatDate(poem.createdAt)}
-            </p>
+            <div className="flex items-center space-x-2">
+              <p className="text-gray-400 text-xs">
+                {formatDate(poem.createdAt)}
+              </p>
+              <div className={`w-2 h-2 rounded-full ${formatLastActive(poem.author.lastActive) === 'Active now' ? 'bg-green-500' : 'bg-gray-500'}`}></div>
+              <p className="text-gray-400 text-xs">
+                {formatLastActive(poem.author.lastActive)}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -51,7 +57,13 @@ const PoemCard = ({ poem }) => {
           <p className="text-gray-300 whitespace-pre-wrap">
             {truncateText(poem.content, 150)}
           </p>
-          <p className="text-indigo-400 text-sm mt-2">{formatTags(poem.tags)}</p>
+          <p className="text-indigo-400 text-sm mt-2">
+            {poem.tags.map(tag => (
+              <Link key={tag} to={`/explore?tag=${tag}`} className="hover:underline">
+                #{tag}
+              </Link>
+            )).reduce((prev, curr) => [prev, ' ', curr])}
+          </p>
         </div>
       </div>
 

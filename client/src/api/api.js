@@ -95,12 +95,21 @@ export const createPoem = async (poemData) => {
   }
 };
 
-export const getAllPoems = async () => {
+export const getAllPoems = async (tag) => {
   try {
-    const response = await API.get('/api/poems');
-    return response.data; 
+    const response = await API.get('/api/poems', { params: { tag } });
+    return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error fetching poems' };
+  }
+};
+
+export const getTrendingTags = async () => {
+  try {
+    const response = await API.get('/api/poems/trending-tags');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Error fetching trending tags' };
   }
 };
 

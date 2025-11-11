@@ -33,10 +33,29 @@ export const createPoem = async (req, res) => {
   }
 };
 
+export const getTrendingTags = async (req, res) => {
+  try {
+    const trendingTags = await Poem.aggregate([
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 },
+    ]);
+    res.status(200).json(trendingTags);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching trending tags",
+      error: error.message,
+    });
+  }
+};
+
 export const getAllPoems = async (req, res) => {
   try {
-    const poems = await Poem.find()
-      .populate("author", "name profilePic")
+    const { tag } = req.query;
+    const query = tag ? { tags: tag } : {};
+    const poems = await Poem.find(query)
+      .populate("author", "name profilePic lastActive")
       .sort({ createdAt: -1 });
     res.status(200).json(poems);
   } catch (error) {
@@ -50,7 +69,7 @@ export const getAllPoems = async (req, res) => {
 export const getPoemById = async (req, res) => {
   const { id } = req.params;
   try {
-    const poem = await Poem.findById(id).populate("author", "name profilePic");
+    const poem = await Poem.findById(id).populate("author", "name profilePic lastActive");
     if (!poem) {
       return res.status(404).json({ message: "Poem not found" });
     }

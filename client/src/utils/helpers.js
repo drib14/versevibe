@@ -64,3 +64,15 @@ export const sanitizeInput = (input) => {
 export const classNames = (...classes) => {
   return classes.filter(Boolean).join(' ');
 };
+
+export const formatLastActive = (dateString) => {
+  const date = parseISO(dateString);
+  const now = new Date();
+  const diffInMinutes = (now - date) / (1000 * 60);
+
+  if (diffInMinutes < 5) {
+    return "Active now";
+  }
+
+  return formatDistanceToNow(date, { addSuffix: true });
+};

@@ -5,6 +5,8 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import poemRoutes from "./routes/poemRoutes.js";
+import { updateLastActive } from "./middlewares/updateLastActive.js";
+import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 dotenv.config()
 const app = express();
@@ -13,6 +15,9 @@ app.use(express.json());
 app.use(cors({ origin: process.env.CLIENT_URL }));
 
 connectDB();
+
+app.use(authMiddleware);
+app.use(updateLastActive);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

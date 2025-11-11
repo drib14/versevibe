@@ -3,7 +3,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PoemCard from "../../components/PoemCard";
 import Loader from "../../components/Loader";
 import InputField from "../../components/InputField";
-import { getAllPoems } from "../../api/api";
+import { getAllPoems, getTrendingTags } from "../../api/api";
+import { useLocation } from "react-router-dom";
 
 const ExplorePage = () => {
   const [allPoems, setAllPoems] = useState([]);
@@ -14,14 +15,35 @@ const ExplorePage = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [trendingTags, setTrendingTags] = useState([]);
   const poemsPerPage = 10;
 
-  const trendingTags = ["love", "nature", "hope", "dreams", "cosmos"];
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tag = params.get('tag');
+    if (tag) {
+      setSelectedTag(tag);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const fetchTrendingTags = async () => {
+      try {
+        const tags = await getTrendingTags();
+        setTrendingTags(tags);
+      } catch (error) {
+        console.error("Failed to fetch trending tags:", error);
+      }
+    };
+    fetchTrendingTags();
+  }, []);
 
   useEffect(() => {
     const fetchPoems = async () => {
       try {
-        const poems = await getAllPoems();
+        const poems = await getAllPoems(selectedTag);
         setAllPoems(poems);
         setfilteredPoems(poems);
         setDisplayedPoems(poems.slice(0, poemsPerPage));
@@ -33,7 +55,7 @@ const ExplorePage = () => {
       }
     };
     fetchPoems();
-  }, []);
+  }, [selectedTag]);
 
   useEffect(() => {
     let filteindigo = allPoems;
@@ -47,13 +69,10 @@ const ExplorePage = () => {
           )
       );
     }
-    if (selectedTag) {
-      filteindigo = filteindigo.filter((poem) => poem.tags.includes(selectedTag));
-    }
     setfilteredPoems(filteindigo);
     setDisplayedPoems(filteindigo.slice(0, page * poemsPerPage));
     setHasMore(filteindigo.length > page * poemsPerPage);
-  }, [searchQuery, selectedTag, allPoems, page]);
+  }, [searchQuery, allPoems, page]);
 
   const loadMorePoems = () => {
     const nextPage = page + 1;
@@ -80,15 +99,15 @@ const ExplorePage = () => {
         <div className="flex flex-wrap gap-2">
           {trendingTags.map((tag) => (
             <button
-              key={tag}
-              onClick={() => handleTagClick(tag)}
+              key={tag._id}
+              onClick={() => handleTagClick(tag._id)}
               className={`px-3 py-1 rounded-full text-sm ${
-                selectedTag === tag
+                selectedTag === tag._id
                   ? "bg-indigo-600 text-white"
                   : "bg-gray-700 text-gray-300 hover:bg-indigo-600"
               }`}
             >
-              #{tag}
+              #{tag._id} ({tag.count})
             </button>
           ))}
         </div>
