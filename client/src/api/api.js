@@ -176,4 +176,13 @@ export const toggleLikeComment = async (commentId) => {
   }
 };
 
+export const searchUsers = async (query) => {
+  try {
+    const response = await API.get('/api/users/search', { params: { query } });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Error searching users' };
+  }
+};
+
 export default API;

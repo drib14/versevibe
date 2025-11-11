@@ -32,7 +32,7 @@ const poemSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
-    commentCount: {
+    totalCommentsCount: {
       type: Number,
       default: 0,
     },

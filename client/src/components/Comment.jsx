@@ -2,6 +2,24 @@ import { useState } from 'react';
 import { formatDate } from '../utils/helpers';
 import Avatar from './Avatar';
 import CommentForm from './CommentForm';
+import { Link } from 'react-router-dom';
+
+const renderContent = (content) => {
+  const mentionRegex = /@(\w+)/g;
+  const parts = content.split(mentionRegex);
+
+  return parts.map((part, index) => {
+    if (index % 2 === 1) {
+      // It's a username
+      return (
+        <Link key={index} to={`/profile/${part}`} className="text-indigo-400 hover:underline">
+          @{part}
+        </Link>
+      );
+    }
+    return part;
+  });
+};
 
 const Comment = ({ comment, onReply }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
@@ -15,7 +33,7 @@ const Comment = ({ comment, onReply }) => {
             <p className="text-white font-semibold text-sm">{comment.author.name}</p>
             <p className="text-gray-400 text-xs">{formatDate(comment.createdAt)}</p>
           </div>
-          <p className="text-gray-300 text-sm mt-1">{comment.content}</p>
+          <p className="text-gray-300 text-sm mt-1">{renderContent(comment.content)}</p>
         </div>
         <div className="flex items-center space-x-3 mt-1 pl-2">
           <button

@@ -94,6 +94,21 @@ export const getUserPoems = async (req, res) => {
     };
 };
 
+export const searchUsers = async (req, res) => {
+  try {
+    const { query } = req.query;
+    if (!query) {
+      return res.status(400).json({ message: 'Query parameter is required' });
+    }
+    const users = await User.find({
+      name: { $regex: query, $options: 'i' },
+    }).select('name profilePic');
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error searching for users', error: error.message });
+  }
+};
+
 export const getUserLikedPoems = async (req, res) => {
     const userId = req.params.id;
     try {

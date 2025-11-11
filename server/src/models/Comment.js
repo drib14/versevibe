@@ -22,6 +22,18 @@ const commentSchema = new mongoose.Schema(
       ref: 'Comment',
       default: null,
     },
+    replies: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+    mentions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
