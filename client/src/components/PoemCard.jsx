@@ -98,27 +98,26 @@ const PoemCard = ({ poem }) => {
           </div>
         </div>
 
-        <div className="px-4 py-2 bg-gray-900 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-1">
-              <HeartIcon isLiked={isLiked} onClick={handleLike} disabled={!user} />
-              {renderLikers()}
-            </div>
-            <div className="flex items-center space-x-1">
-              <CommentIcon onClick={handleComment} />
-              <span className="text-gray-400 text-sm">{poem.commentCount}</span>
-            </div>
+        <div className="px-4 py-2 bg-gray-900">
+          <div className="flex items-center justify-between mb-2">
+            {renderLikers()}
+            <span className="text-gray-400 text-sm">{poem.commentCount} comments</span>
           </div>
-
-          {isOwnPoem && (
-            <button
-              onClick={() => navigate(`/write?edit=${poem._id}`)}
-              className="text-indigo-400 hover:text-indigo-300 transition"
-              title="Edit poem"
-            >
-              Edit
-            </button>
-          )}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <HeartIcon isLiked={isLiked} onClick={handleLike} disabled={!user} />
+              <CommentIcon onClick={handleComment} />
+            </div>
+            {isOwnPoem && (
+              <button
+                onClick={() => navigate(`/write?edit=${poem._id}`)}
+                className="text-indigo-400 hover:text-indigo-300 transition"
+                title="Edit poem"
+              >
+                Edit
+              </button>
+            )}
+          </div>
         </div>
       </div>
       <LikersModal

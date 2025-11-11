@@ -20,6 +20,10 @@ export const signup = async (req, res) => {
       password: hashedPassword,
     });
 
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not defined");
+    }
+
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
