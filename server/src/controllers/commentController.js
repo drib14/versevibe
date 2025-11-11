@@ -13,7 +13,7 @@ export const createComment = async (req, res) => {
     let match;
     while ((match = mentionRegex.exec(content)) !== null) {
       const username = match[1];
-      const user = await User.findOne({ name: username });
+      const user = await User.findOne({ username: username });
       if (user) {
         mentions.push(user._id);
       }

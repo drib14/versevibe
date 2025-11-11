@@ -15,16 +15,21 @@ export const signup = async (req, res) => {
     if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
       return res.status(400).json({ message: 'All fields must be strings' });
     }
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
+    if (existingUserEmail) {
+      return res.status(400).json({ message: "User with this email already exists" });
+    }
 
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+    const existingUserUsername = await User.findOne({ username: name });
+    if (existingUserUsername) {
+      return res.status(400).json({ message: "Username is already taken" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
       name,
+      username: name,
       email: email.toLowerCase(),
       password: hashedPassword,
     });

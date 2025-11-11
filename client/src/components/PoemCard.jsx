@@ -11,14 +11,16 @@ import { MessageCircle } from "lucide-react";
 import LikersModal from "./LikersModal";
 import CommentSection from "./CommentSection";
 
-const PoemCard = ({ poem }) => {
+const PoemCard = ({ poem: initialPoem }) => {
   const { user, isAuthenticated } = useUserStore();
+  const [poem, setPoem] = useState(initialPoem);
   const [likes, setLikes] = useState(poem.likes);
   const [isLiked, setIsLiked] = useState(
     user ? poem.likes.some((like) => like._id === user.id) : false
   );
   const [isLikersModalOpen, setIsLikersModalOpen] = useState(false);
   const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
+  const [triggerFocus, setTriggerFocus] = useState(false);
   const navigate = useNavigate();
 
   const isOwnPoem = isAuthenticated && user && poem.author._id === user.id;
@@ -31,6 +33,18 @@ const PoemCard = ({ poem }) => {
     } catch (error) {
       toast.error("Failed to like poem");
     }
+  };
+
+  const handleCommentAdded = () => {
+    setPoem((prevPoem) => ({
+      ...prevPoem,
+      totalCommentsCount: prevPoem.totalCommentsCount + 1,
+    }));
+  };
+
+  const handleCommentIconClick = () => {
+    setIsCommentSectionOpen(!isCommentSectionOpen);
+    setTriggerFocus(true);
   };
 
   const renderLikers = () => {
@@ -101,15 +115,15 @@ const PoemCard = ({ poem }) => {
             {renderLikers()}
             <span
               className="text-gray-400 text-sm cursor-pointer hover:underline"
-              onClick={() => setIsCommentSectionOpen(!isCommentSectionOpen)}
+              onClick={handleCommentIconClick}
             >
-              {poem.commentCount} comments
+              {poem.totalCommentsCount} comments
             </span>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <HeartIcon isLiked={isLiked} onClick={handleLike} disabled={!user} />
-              <CommentIcon onClick={() => setIsCommentSectionOpen(!isCommentSectionOpen)} />
+              <CommentIcon onClick={handleCommentIconClick} />
             </div>
             {isOwnPoem && (
               <button
@@ -127,7 +141,8 @@ const PoemCard = ({ poem }) => {
             <CommentSection
               poemId={poem._id}
               totalCommentsCount={poem.totalCommentsCount}
-              onCommentIconClick={isCommentSectionOpen}
+              onCommentAdded={handleCommentAdded}
+              onCommentIconClick={triggerFocus}
             />
           </div>
         )}

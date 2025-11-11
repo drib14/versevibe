@@ -4,7 +4,7 @@ import Comment from './Comment';
 import CommentForm from './CommentForm';
 import { toast } from 'react-hot-toast';
 
-const CommentSection = ({ poemId, totalCommentsCount, onCommentIconClick }) => {
+const CommentSection = ({ poemId, totalCommentsCount, onCommentIconClick, onCommentAdded }) => {
   const [comments, setComments] = useState([]);
   const [showAllComments, setShowAllComments] = useState(false);
   const commentInputRef = useRef(null);
@@ -38,6 +38,7 @@ const CommentSection = ({ poemId, totalCommentsCount, onCommentIconClick }) => {
       setComments([...comments, newComment]);
     }
     toast.success('Comment posted successfully!');
+    onCommentAdded();
   };
 
   const renderComments = (commentList) => {
