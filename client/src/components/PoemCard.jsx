@@ -9,6 +9,7 @@ import HeartIcon from "./icons/HeartIcon";
 import CommentIcon from "./icons/CommentIcon";
 import { MessageCircle } from "lucide-react";
 import LikersModal from "./LikersModal";
+import CommentSection from "./CommentSection";
 
 const PoemCard = ({ poem }) => {
   const { user, isAuthenticated } = useUserStore();
@@ -17,6 +18,7 @@ const PoemCard = ({ poem }) => {
     user ? poem.likes.some((like) => like._id === user.id) : false
   );
   const [isLikersModalOpen, setIsLikersModalOpen] = useState(false);
+  const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
   const navigate = useNavigate();
 
   const isOwnPoem = isAuthenticated && user && poem.author._id === user.id;
@@ -29,10 +31,6 @@ const PoemCard = ({ poem }) => {
     } catch (error) {
       toast.error("Failed to like poem");
     }
-  };
-
-  const handleComment = () => {
-    navigate(`/poem/${poem._id}`);
   };
 
   const renderLikers = () => {
@@ -101,12 +99,17 @@ const PoemCard = ({ poem }) => {
         <div className="px-4 py-2 bg-gray-900">
           <div className="flex items-center justify-between mb-2">
             {renderLikers()}
-            <span className="text-gray-400 text-sm">{poem.commentCount} comments</span>
+            <span
+              className="text-gray-400 text-sm cursor-pointer hover:underline"
+              onClick={() => setIsCommentSectionOpen(!isCommentSectionOpen)}
+            >
+              {poem.commentCount} comments
+            </span>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <HeartIcon isLiked={isLiked} onClick={handleLike} disabled={!user} />
-              <CommentIcon onClick={handleComment} />
+              <CommentIcon onClick={() => setIsCommentSectionOpen(!isCommentSectionOpen)} />
             </div>
             {isOwnPoem && (
               <button
@@ -119,6 +122,11 @@ const PoemCard = ({ poem }) => {
             )}
           </div>
         </div>
+        {isCommentSectionOpen && (
+          <div className="p-4">
+            <CommentSection poemId={poem._id} />
+          </div>
+        )}
       </div>
       <LikersModal
         isOpen={isLikersModalOpen}

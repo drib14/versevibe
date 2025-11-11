@@ -1,5 +1,6 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config()
+import express from "express";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -9,7 +10,6 @@ import commentRoutes from "./routes/commentRoutes.js";
 import { updateLastActive } from "./middlewares/updateLastActive.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
 
-dotenv.config()
 const app = express();
 
 app.use(express.json());
