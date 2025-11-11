@@ -9,11 +9,10 @@ import {
   getRandomPoems,
   getTrendingTags,
 } from "../controllers/poemController.js";
-import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/create", authMiddleware, createPoem);
+router.post("/create", createPoem);
 
 router.get("/trending-tags", getTrendingTags);
 
@@ -21,12 +20,12 @@ router.get("/", getAllPoems);
 
 router.get("/random", getRandomPoems);
 
-router.get("/:id", authMiddleware, getPoemById);
+router.get("/:id", getPoemById);
 
-router.put("/:id", authMiddleware, updatePoem);
+router.put("/:id", updatePoem);
 
-router.delete("/:id", authMiddleware, deletePoem);
+router.delete("/:id", deletePoem);
 
-router.put("/:id/like", authMiddleware, toggleLikePoem);
+router.put("/:id/like", toggleLikePoem);
 
 export default router;

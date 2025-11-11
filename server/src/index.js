@@ -16,12 +16,9 @@ app.use(cors({ origin: process.env.CLIENT_URL }));
 
 connectDB();
 
-app.use(authMiddleware);
-app.use(updateLastActive);
-
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/poems", poemRoutes);
+app.use("/api/users", authMiddleware, updateLastActive, userRoutes);
+app.use("/api/poems", authMiddleware, updateLastActive, poemRoutes);
 
 app.get("/", (req, res) => {
   res.send("VerseVibe backend is live");
