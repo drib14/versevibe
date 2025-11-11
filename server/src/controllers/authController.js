@@ -9,8 +9,11 @@ export const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    if (typeof email !== 'string') {
-      return res.status(400).json({ message: 'Email must be a string' });
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+    if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
+      return res.status(400).json({ message: 'All fields must be strings' });
     }
     const existingUser = await User.findOne({ email: email.toLowerCase() });
 

@@ -62,7 +62,7 @@ export const getCommentsForPoem = async (req, res) => {
           select: 'name profilePic',
         },
       })
-      .populate('mentions', 'name');
+      .populate('mentions', 'name _id');
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching comments', error: error.message });

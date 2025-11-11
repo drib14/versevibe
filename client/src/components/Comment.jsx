@@ -8,18 +8,21 @@ import useUserStore from '../store/userStore';
 import HeartIcon from './icons/HeartIcon';
 import toast from 'react-hot-toast';
 
-const renderContent = (content) => {
+const renderContent = (content, mentions) => {
   const mentionRegex = /@(\w+)/g;
   const parts = content.split(mentionRegex);
 
   return parts.map((part, index) => {
     if (index % 2 === 1) {
-      // It's a username
-      return (
-        <Link key={index} to={`/profile/${part}`} className="text-indigo-400 hover:underline">
-          @{part}
-        </Link>
-      );
+      const mention = mentions.find((m) => m.name === part);
+      if (mention) {
+        return (
+          <Link key={index} to={`/profile/${mention._id}`} className="text-indigo-400 hover:underline">
+            @{part}
+          </Link>
+        );
+      }
+      return `@${part}`;
     }
     return part;
   });
@@ -52,7 +55,7 @@ const Comment = ({ comment, onReply }) => {
             <p className="text-white font-semibold text-sm">{comment.author.name}</p>
             <p className="text-gray-400 text-xs">{formatDate(comment.createdAt)}</p>
           </div>
-          <p className="text-gray-300 text-sm mt-1">{renderContent(comment.content)}</p>
+          <p className="text-gray-300 text-sm mt-1">{renderContent(comment.content, comment.mentions)}</p>
         </div>
         <div className="flex items-center space-x-3 mt-1 pl-2">
           <button

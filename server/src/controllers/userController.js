@@ -81,6 +81,9 @@ export const updateUserAvatar = async (req, res) => {
 export const getUserPoems = async (req, res) => {   
     const userId = req.params.id;
     try {
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user ID' });
+        }
         const user = await User.findById(userId).populate("poems");
         if(!user) {
             return res.status(404).json({
@@ -112,6 +115,9 @@ export const searchUsers = async (req, res) => {
 export const getUserLikedPoems = async (req, res) => {
     const userId = req.params.id;
     try {
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user ID' });
+        }
        const user = await User.findById(userId).populate("likedPoems");
        if(!user) {
             return res.status(404).json({
