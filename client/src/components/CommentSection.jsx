@@ -27,7 +27,8 @@ const CommentSection = ({ poemId, totalCommentsCount, onCommentIconClick, onComm
     }
   }, [onCommentIconClick]);
 
-  const handleNewComment = (newComment) => {
+  const handleNewComment = (response) => {
+    const { newComment, updatedPoem } = response;
     if (newComment.parentComment) {
       setComments(
         comments.map((c) =>
@@ -38,7 +39,7 @@ const CommentSection = ({ poemId, totalCommentsCount, onCommentIconClick, onComm
       setComments([...comments, newComment]);
     }
     toast.success('Comment posted successfully!');
-    onCommentAdded();
+    onCommentAdded(updatedPoem);
   };
 
   const renderComments = (commentList) => {
@@ -69,7 +70,7 @@ const CommentSection = ({ poemId, totalCommentsCount, onCommentIconClick, onComm
           onClick={() => setShowAllComments(true)}
           className="text-gray-400 hover:text-white mt-4"
         >
-          View all {totalCommentsCount} comments
+          View all comments
         </button>
       )}
     </div>

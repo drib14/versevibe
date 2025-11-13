@@ -66,6 +66,9 @@ export const classNames = (...classes) => {
 };
 
 export const formatLastActive = (dateString) => {
+  if (!dateString) {
+    return 'Unknown';
+  }
   const date = parseISO(dateString);
   const now = new Date();
   const diffInMinutes = (now - date) / (1000 * 60);

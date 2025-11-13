@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import Avatar from './Avatar';
+import { Link } from 'react-router-dom';
 
 const LikersModal = ({ isOpen, onClose, likers }) => {
   return (
@@ -8,7 +9,9 @@ const LikersModal = ({ isOpen, onClose, likers }) => {
         {likers.map((liker) => (
           <div key={liker._id} className="flex items-center space-x-3">
             <Avatar src={liker.profilePic} alt={liker.name} />
-            <span className="text-white">{liker.name}</span>
+            <Link to={`/profile/${liker._id}`} className="text-white hover:underline">
+              {liker.name}
+            </Link>
           </div>
         ))}
       </div>

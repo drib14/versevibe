@@ -150,8 +150,8 @@ export const toggleLikePoem = async (req, res) => {
     }
     await poem.save();
     await user.save();
-    const updatedPoem = await Poem.findById(id).populate("likes", "name");
-    res.status(200).json({ message: "Poem like toggled", likes: updatedPoem.likes });
+    const updatedPoem = await Poem.findById(id).populate("likes", "name").populate("author", "name profilePic lastActive");
+    res.status(200).json({ message: "Poem like toggled", poem: updatedPoem });
   } catch (error) {
     console.error("Error toggling like:", error);
     res.status(500).json({ message: "Error toggling like", error: error.message });

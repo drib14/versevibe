@@ -35,6 +35,8 @@ const Comment = ({ comment, onReply }) => {
   const [isLiked, setIsLiked] = useState(
     user ? comment.likes.some((like) => like._id === user.id) : false
   );
+  const [isLikersModalOpen, setIsLikersModalOpen] = useState(false);
+  const [showAllReplies, setShowAllReplies] = useState(false);
 
   const handleLike = async () => {
     try {
@@ -66,7 +68,12 @@ const Comment = ({ comment, onReply }) => {
           </button>
           <div className="flex items-center space-x-1">
             <HeartIcon isLiked={isLiked} onClick={handleLike} disabled={!user} size="xs" />
-            <span className="text-gray-400 text-xs">{likes.length}</span>
+            <span
+              className="text-gray-400 text-xs cursor-pointer hover:underline"
+              onClick={() => setIsLikersModalOpen(true)}
+            >
+              {likes.length}
+            </span>
           </div>
         </div>
         {showReplyForm && (
@@ -79,7 +86,31 @@ const Comment = ({ comment, onReply }) => {
             />
           </div>
         )}
+        {comment.replies && comment.replies.length > 0 && (
+          <div className="mt-2">
+            {showAllReplies
+              ? comment.replies.map((reply) => (
+                  <Comment key={reply._id} comment={reply} onReply={onReply} />
+                ))
+              : comment.replies.slice(0, 1).map((reply) => (
+                  <Comment key={reply._id} comment={reply} onReply={onReply} />
+                ))}
+            {comment.replies.length > 1 && !showAllReplies && (
+              <button
+                onClick={() => setShowAllReplies(true)}
+                className="text-gray-400 hover:text-white text-xs mt-2"
+              >
+                View all {comment.replies.length} replies
+              </button>
+            )}
+          </div>
+        )}
       </div>
+      <LikersModal
+        isOpen={isLikersModalOpen}
+        onClose={() => setIsLikersModalOpen(false)}
+        likers={likes}
+      />
     </div>
   );
 };

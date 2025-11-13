@@ -37,14 +37,18 @@ export const createComment = async (req, res) => {
     }
 
     // Update the poem's total comment count
-    await Poem.findByIdAndUpdate(poemId, {
-      $push: { comments: newComment._id },
-      $inc: { totalCommentsCount: 1 },
-    });
+    const updatedPoem = await Poem.findByIdAndUpdate(
+      poemId,
+      {
+        $push: { comments: newComment._id },
+        $inc: { totalCommentsCount: 1 },
+      },
+      { new: true }
+    );
 
     const populatedComment = await Comment.findById(newComment._id).populate('author', 'name profilePic');
 
-    res.status(201).json(populatedComment);
+    res.status(201).json({ newComment: populatedComment, updatedPoem });
   } catch (error) {
     res.status(500).json({ message: 'Error creating comment', error: error.message });
   }
@@ -62,7 +66,7 @@ export const getCommentsForPoem = async (req, res) => {
           select: 'name profilePic',
         },
       })
-      .populate('mentions', 'name _id');
+      .populate('mentions', 'name username _id');
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching comments', error: error.message });

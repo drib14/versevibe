@@ -34,11 +34,8 @@ const PoemCard = ({ poem: initialPoem }) => {
     }
   };
 
-  const handleCommentAdded = () => {
-    setPoem((prevPoem) => ({
-      ...prevPoem,
-      totalCommentsCount: prevPoem.totalCommentsCount + 1,
-    }));
+  const handleCommentAdded = (updatedPoem) => {
+    setPoem(updatedPoem);
   };
 
   const handleCommentIconClick = () => {
